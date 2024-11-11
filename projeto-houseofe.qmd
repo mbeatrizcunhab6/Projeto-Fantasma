@@ -1,28 +1,8 @@
 ---
-title: "Projeto House of excellence"
+title: "Projeto House"
 
-# Nome do documento PDF gerado
 output-file: Projeto House of excellence
 ---
-
-```{r}
-#| include: false
-source("rdocs/source/packages.R")
-```
-
-```{r}
-# Rodar apenas uma vez na vida!
-## Instalando o tinytex(pacote apenas)
-### CRAN version
-install.packages('tinytex')
-
-### or the development version on GitHub
-remotes::install_github('rstudio/tinytex')
-
-## Baixando o tinytex
-library(tinytex)
-tinytex::install_tinytex()
-```
 
 # Introdução
 
@@ -114,12 +94,6 @@ source("análiseHOEX.R")
 
 ```{r, echo=FALSE}
 
-#total do top 5 em relação ao total : 46,97% do total
-totaltop5 <- sum(top5paises)
-totaltudo <- sum(paisescresc)
-porctop5 <- (totaltop5/totaltudo)*100
-porctop5
-
 top5paisesp <- as.data.frame(top5paises)
 top5paisesp
 
@@ -146,9 +120,5 @@ ggplot(top5paisesp) +
 ggsave("colunas-top5.pdf", width = 158, height = 93, units = "mm"
 )
 ```
-
-Ao selecionarmos apenas as ganhadoras mulheres dos dados disponibilizados, podemos perceber que representam 4566 ganhadores, ou seja, cerca de 45,85% do total de medalistas.
-
-Outrossim, percebe-se por meio da Figura 1 que o país com maior número de ganhadoras mulheres são os Estados Unidos, representando cerca de 34,5% dentro desse secção denominada Top 5, seguido pela Russia (19,3%), pela China (17,9%), pela Austrália (15,9%) e pela Alemanha (12,5%). Vale ressaltar também que, dentro do total de ganhadores do sexo feminino, os Estados Unidos representam cerca de 16,18% do total de medalistas.
 
 # Conclusões
