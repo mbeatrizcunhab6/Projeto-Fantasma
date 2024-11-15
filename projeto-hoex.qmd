@@ -27,7 +27,7 @@ tinytex::install_tinytex(force = TRUE)
 
 # Introdução
 
-Este relatório tem como objetivo principal a realização de análises estatísticas, a fim de ponderar e avaliar o desempenho dos atletas de elite da companhia House of Excellence ao longo de 5 olimpíadas. Através da utilização de alguns critérios estatísticos,as avaliações tendem esclarecer 4 tópicos pertinentes à empresa, os quais são descirtas como a compreensão dos países com o maior número de mulheres medalistas, a verificação e a possível correlação entre os IMCs de determinados esportes, a relação entre medalistas gerais e as medalhas conquistadas, além de entender a relação entre o peso e a altura dos atletas da equipe.
+Este relatório tem como objetivo principal a realização de análises estatísticas, a fim de ponderar e avaliar o desempenho dos atletas de elite da companhia House of Excellence ao longo de 5 olimpíadas. Através da utilização de alguns critérios estatísticos,as avaliações tendem esclarecer 4 tópicos pertinentes à empresa, os quais são descritas como a compreensão dos países com o maior número de mulheres medalistas, a verificação e a possível correlação entre os IMCs de determinados esportes, a relação entre medalistas gerais e as medalhas conquistadas, além de entender a relação entre o peso e a altura dos atletas da equipe.
 
 O banco de dados foi coletado e disponibilizado pela própria empresa. Trata-se de uma amostra composta por 5 variáveis qualitativas nominais, sendo essas o nome, o gênero, a idade, o time, o esporte e a modalidade. Além disso, também dispõe de 3 variáveis quantitativas contínuas, sendo essas a idade, a altura e o peso. Também conta com uma variável do tipo qualitativa ordinal descrita como o tipo da medalha conquistada pelo atleta.
 
@@ -104,114 +104,6 @@ As variáveis quantitativas são as variáveis numéricas, que representam carac
 
 -   **Discretas**: quando os possíveis valores são enumeráveis (exemplos: número de filhos, número de cigarros fumados, etc)
 -   **Contínuas**: quando os possíveis valores são resultado de medições (exemplos: massa, altura, tempo, etc)
-
-Análise de Variância (ANOVA)
-
-A Análise de Variância, mais conhecida por ANOVA, consiste em um teste de hipótese, em que é testado se as médias dos tratamentos (ou grupos) são iguais. Os dados são descritos pelo seguinte modelo:
-
-$$
-y_{ij} = \mu + \alpha_i + e_{ij}, \quad i=1,…,a \quad e \quad j=1,…,N
-$$
-
-Em que:
-
-$i$ é o número de tratamentos
-
-$j$ é o número de observações
-
-$y_{ij}$ é a j-ésima observação do i-ésimo tratamento
-
-No modelo, $\mu$ é a média geral dos dados e $\alpha_i$ é o efeito do tratamento $i$ na variável resposta. Já $e_{ij}$ é a variável aleatória correspondente ao erro. Supõe-se que tal variável tem distribuição de probabilidade Normal com média zero e variância $\sigma^2$. Mais precisamente, $e_{ij} \sim N(0,\sigma^2)$.
-
-A variabilidade total pode ser decomposta na variabilidade devida aos diferentes tratamentos somada à variabilidade dentro de cada tratamento:
-
-```{=tex}
-\begin{align*}
-\text{Soma de Quadrados Total (SQTOT)} &= \text{Soma de Quadrados de Tratamento (SQTRAT)} \\
-&+ \text{Soma de Quadrados de Resíduos (SQRES)}
-\end{align*}
-```
-Sendo o estudo não balanceado, ou seja, quando os tratamentos possuem tamanhos de amostra distintos:
-
-$$
-SQTOT = \sum\limits_{i=1}^a \sum\limits_{j=1}^{n_i} y_{ij}^2 - \frac{y_{..}^2}{N}
-$$
-
-$$
-SQTRAT = \sum\limits_{i=1}^a \frac{y_{i.}^2}{n_i} - \frac{y_{..}^2}{N}
-$$
-
-$$
-SQRES = \sum\limits_{i=1}^a \sum\limits_{j=1}^{n_i} y_{ij}^2 - \sum\limits_{i=1}^a \frac{y_{i.}^2}{n_i}
-$$
-
-Em que:
-
-$n_i$ é o número de observações do i-ésimo tratamento
-
-$N$ é o número total de observações
-
-$y_{..} = \sum\limits_{i=1}^a \sum\limits_{j=1}^{n_i} y_{ij}$
-
-$y_{i.} = \sum\limits_{j=1}^{n_i} y_{ij}$
-
-As hipóteses do teste são:
-
-\hipoteses{As médias dos \textit{a} tratamentos são iguais}{Existe pelo menos um par de médias diferente}
-
-A estatística do teste é composta pelo Quadrado Médio de Tratamento (QMTRAT) e Quadrado Médio de Resíduos (QMRES), sendo a definição de Quadrado Médio a divisão da Soma de Quadrados pelos seus graus de liberdade. Por conta da suposição de Normalidade dos erros no modelo, a estatística do teste, $F$, tem distribuição F de Snedecor com $(a - 1)$ e $(\sum_{i=1}^a n_i - a)$ graus de liberdade.
-
-$$
-F_{obs} = \frac{QMTRAT}{QMRES} = \frac{\frac{SQTRAT}{(a-1)}}{\frac{SQRES}{(\sum_{i=1}^a n_i - a)}}
-$$
-
-A hipótese nula é rejeitada caso o p-valor seja menor que o nível de significância pré-fixado. A Tabela $\ref{tab:anova}$ abaixo resume as informações anteriores:
-
-```{=tex}
-\begin{table}[H]
-\centering
-\caption{Tabela de Análise de Variância}
-\begin{tabular}{c | c c c c c}
-    \toprule 
-    Fonte de & Graus de  & Soma de  & Quadrado  & \multirow{2}{*}{Estatística F} & \multirow{2}{*}{P-valor} \\ 
-    Variação & Liberdade & Quadrados & Médio & & \\
-    \midrule
-    Tratamento & $(a-1)$ & SQTRAT & $\frac{SQTRAT}{(a-1)}$ & $\frac{QMTRAT}{QMRES}$ & $P(F>F_{obs})$ \\[5pt]
-    Resíduos & $(\sum_{i=1}^a n_i - a)$ & SQRES & $\frac{SQRES}{(\sum_{i=1}^a n_i - a)}$ & & \\ 
-    \midrule
-    Total & $(\sum_{i=1}^a n_i - 1)$ & SQTOT & & & \\ 
-    \bottomrule
-\end{tabular}
-\label{tab:anova}
-\end{table}
-```
-Teste de Tukey HSD
-
-Após a rejeição da hipótese nula da Análise de Variância (ANOVA), deve-se identificar quais médias diferem. Para isso, é utilizado o teste de Tukey HSD, tendo como objetivo comparar as médias duas a duas. Diferentemente de outros testes, ele controle o erro global do teste. Ou seja, a probabilidade de se cometer pelo menos um erro do tipo I é igual a $\alpha$. As hipóteses são:
-
-\hipoteses{$\mu_i=\mu_j$}{$\mu_i \neq \mu_j$}
-
-A estatística do teste é dada por:
-
-$$T = Tukey_{(\alpha; \: a; \: N-a)}\sqrt{\left(\frac{1}{n}+\frac{1}{m}\right)\frac{QM_{res}}{2}}$$
-
-Em que:
-
-$\alpha$ é o nível de significância global do teste
-
-$a$ é o número de tratamentos/grupos
-
-$N$ é o número total de observações
-
-$Tukey_{(\alpha; \: a; \: N-a)}$ é o quantil da distribuição de \textit{Tukey} com esses parâmetros
-
-$QM_{res}$ é o Quadrado Médio do Resíduo obtido da tabela de Análise de Variância
-
-$n$ é o número de observações do tratamento/grupo i
-
-$m$ é o número de observações do tratamento/grupo j
-
-Rejeita-se a hipótese nula caso o módulo da diferença entre as médias ($|\bar{y_i} - \bar{y_j}|$) seja maior ou igual a $T$. Caso contrário, não se pode afirmar que as médias diferem.
 
 ## Teste de Normalidade de Shapiro-Wilk
 
@@ -312,7 +204,7 @@ Para realizar a comparação dos pares e concluir se serão concordantes ou disc
 
 ## Top 5 países com maior número de mulheres medalistas
 
-Para a primeira análise será utliziado as variáveis categóricas qualitativa nominais Sexo e Time, além da variável categórica qualitativa ordinal denominada Medalha.
+Esta análise tem o objetivo de verificar os países que possuem o maior número de mulheres medalistas e, dessa forma, montar um ranking com os 5 países mais pontuados. Para tal, foram utilizadas as variáveis Gênero e Time, as quais se tratam de variáveis qualitativas nominais, e a variável Medalha, se tratando de uma variável qualitativa ordinal. Será utilizado um gráfico de colunas com o intuito de ilustrar as análises.
 
 Figura 1: Gráfico de Colunas do Top 5 países com maior número de mulheres medalistas
 
@@ -336,14 +228,14 @@ top5paisesp$Var1 <- as.factor(top5paisesp$Var1)
 ```{r, echo=FALSE}
 top5paisesp <- paisescresc %>%
   mutate(
-    relative_freq = round((Freq / sum(Freq)) * 100, 1),
+    relative_freq = round((Freq / sum(Freq)) * 100, 0),
     freq = gsub("\\.", ",", relative_freq) %>% paste("%", sep = ""),
     # Atualização do label para incluir a porcentagem e a frequência
     label = str_c(Freq, " (", freq, ")", sep = "") %>% str_squish()  # Ordem: % (Freq)
   )
 
 top5paisesp <- head(top5paisesp, 5)
-top5paisesp$Var1 <- recode(top5paisesp$Var1, "'United States'='Estados Unidos';'Germany'='Alemanha'")
+top5paisesp$Var1 <- recode(top5paisesp$Var1, "'United States'='Estados Unidos';'Germany'='Alemanha';'Australia'='Austrália';'Russia'='Rússia'")
 
 ggplot(top5paisesp) +
   aes(x = fct_reorder(Var1, Freq, .desc=T), y = Freq, label = label) +
@@ -359,61 +251,130 @@ ggsave("colunas-top5.pdf", width = 158, height = 93, units = "mm"
 )
 ```
 
-Ao selecionarmos apenas as ganhadoras mulheres dos dados disponibilizados, podemos perceber que representam 4597 ganhadores, ou seja, cerca de 45,89% do total de medalistas.
+Ao selecionarmos apenas as ganhadoras mulheres dos dados disponibilizados, podemos perceber que representam 3245 ganhadores, ou seja, cerca de 44,48% do total de medalistas.
 
-Outrossim, percebe-se por meio da Figura 1 que o país com maior número de ganhadoras mulheres são os Estados Unidos, representando cerca de 16,1% dentro desse secção denominada Top 5, seguido pela Russia (9%), pela China (8,4%), pela Austrália (7,4%) e pela Alemanha (5,8%).
+Outrossim, percebe-se por meio da Figura 1 que o país com maior número de ganhadoras mulheres são os Estados Unidos, representando cerca de 13,7% dentro desse secção denominada Top 5, seguido pela Rússia (9%), pela China (8,22%), pela Austrália (6,74%) e pela Alemanha (5,79%). A figura 1 também permite observar que continentes como a América, Europa, Ásia e Oceania, possuem uma forte representação feminina nas olimpiadas, com foco na Europa, a qual desponta duas vezes no top 5.
 
 ## Valor IMC por esporte
 
-Para a segunda análise será utliziado a variável categórica qualitativa nominais Time, além da variável categórica qualitativa contínua denominada IMC.
+Essa análise tem como objetivo verificar as tendências dos indices de massa corporal dos atletas e compara-los por meio do esporte que praticam, além de apurar se existem ligações entre esses dois fatores. Será utliziado a variável categórica qualitativa nominais Time, além da variável categórica qualitativa contínua denominada IMC.
 
 Figura 2: Boxplot do IMC pelo tipo de esporte
 
 ```{r, echo=FALSE}
-dadosesp$Sport <- recode(dadosesp$Sport, "'Gymnastics'='Ginástica';'Athletics'='Atletismo'; 'Football' = 'Futebol'")
-
+dadosesp <- dadosesp %>%
+  mutate(
+    Sport = case_when(
+      Sport == "Gymnastics" ~ "Ginástica",
+      Sport == "Athletics" ~ "Atletismo",
+      Sport == "Football" ~ "Futebol",
+      Sport == "Judo" ~ "Judô",
+      TRUE ~ Sport
+    ),
+    
+    Sport = factor(Sport, levels = c("Ginástica", "Atletismo", "Futebol", "Badminton", "Judô"))
+  )
 
 ggplot(dadosesp) +
-aes(x = reorder(Sport, IMC, FUN = mean), y = IMC) +
-geom_boxplot(fill = c("#A11D21"), width = 0.5) +
-stat_summary(
-fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
-) +
-labs(x = "Esporte", y = "IMC") +
-theme_estat()
+  aes(x = Sport, y = IMC) +
+  geom_boxplot(fill = c("#A11D21"), width = 0.5) +
+  stat_summary(
+    fun = "mean", geom = "point", shape = 23, size = 3, fill = "white"
+  ) +
+  labs(x = "Esporte", y = "IMC") +
+  theme_estat()
 ggsave("box_bi.pdf", width = 158, height = 93, units = "mm")
-
+```
+```{=tex}
+\begin{quadro}[H]
+    \caption{Medidas resumo do IMC}
+    \centering
+    \begin{tabular}{| l | 
+            S[table-format = 2.2] 
+            S[table-format = 2.2] 
+            S[table-format = 2.2] 
+            S[table-format = 2.2] 
+            S[table-format = 2.2] |}
+    \toprule
+        \textbf{Estatística} & \textbf{Atletismo} & \textbf{Badminton} & \textbf{Futebol} & \textbf{Ginástica} & \textbf{Judô} \\
+    \midrule
+        Média & 22.30 & 22.21 & 22.51 & 20.68 & 25.70 \\
+        Desvio Padrão & 3.86 & 1.50 & 1.73 & 2.38 & 5.12 \\
+        Variância & 14.92 & 2.26 & 2.99 & 5.67 & 26.23 \\
+        Mínimo & 15.82 & 18.94 & 16.73 & 15.16 & 18.52 \\
+        1º Quartil & 20.03 & 21.22 & 21.34 & 18.61 & 22.06 \\
+        Mediana & 21.45 & 22.28 & 22.49 & 21.09 & 24.68 \\
+        3º Quartil & 23.67 & 23.21 & 23.71 & 22.48 & 27.70 \\
+        Máximo & 44.38 & 26.73 & 29.07 & 26.45 & 56.50 \\
+    \bottomrule
+    \end{tabular}
+    \label{quad:quadro_resumo1}
+\end{quadro}
 ```
 
-Ao analisarmos as médias de cada esporte, podemos observar que, em comparação aos outros esportes, os atletas da ginástica possuem um valor de IMC médio mais baixo (20,7), enquanto o judo apresenta IMC médio mais alto (25,7). Segundo a figura 2, é visivel um grande número de outliners, ou seja, valores discrepantes, que estão for do intervalo esperado.
+Ao analisarmos as médias de cada esporte, podemos observar que, em comparação aos outros esportes, os atletas da ginástica possuem um valor de IMC médio mais baixo (20,68), enquanto o judô apresenta IMC médio mais alto (25,7). Segundo a figura 2, é visivel um grande número de outliners, ou seja, valores discrepantes, que estão for do intervalo esperado.
 
+$$
+\begin{cases}
+        H_{0}: \parbox[t]{2\textwidth/3}{A variável segue uma distribuição normal} \\
+        H_{1}: \parbox[t]{2\textwidth/3}{A variável não segue uma distribuição normal} \\
+\end{cases}
+$$
+Quadro 2: P-valor do teste de distribuição Shapiro-Wilk para a variável IMC
+
+```{=tex}
+\begin{table}[H]
+\begin{tabular}{|lll|}
+\hline
+\textbf{Grupo} & \textbf{P-valor} & \textbf{Decisão do teste} \\ \hline
+IMC       & \textless{}0,001 & Rejeita $H_{0}$                \\ \hline
+\end{tabular}
+\end{table}
+```
 A fim de verificarmos se há diferença entre os IMC entre diferentes tipos de esporte, foi realizado primeiro o teste de normalidade Shapiro-Wilk, o qual indicou que a váriavel analisada não segue uma distribuição Normal de probabilidade(P\<0,001), ou seja, é necessário a realização de um teste não paramétrico.
 
 $$
 \begin{cases}
-        H_{0}: \parbox[t]{2\textwidth/3}{O IMC e tipo de esporte seguem uma distribuição simétrica em torno de zero} \\
-        H_{1}: \parbox[t]{2\textwidth/3}{O IMC e tipo de esporte não seguem uma distribuição simétrica em torno de zero} \\
+        H_{0}: \parbox[t]{2\textwidth/3}{As médias do IMC entre os esportes são iguais} \\
+        H_{1}: \parbox[t]{2\textwidth/3}{A média de pelo menos um esporte é diferente} \\
 \end{cases}
 $$
+
+Quadro 3: P-valor do teste não paramétrico Kruskal-Wallis para os diferentes esportes
+
+```{=tex}
+\begin{table}[H]
+\begin{tabular}{|llc|}
+\hline
+\textbf{Grupo} & \textbf{P-valor}                  & \multicolumn{1}{l|}{\textbf{Decisão do teste}} \\ \hline
+Esportes       & \multirow{2}{*}{\textless{}0,001} & \multirow{2}{*}{Rejeita $H_{0}$}                    \\
+IMC            &                                   &                                                \\ \hline
+\end{tabular}
+\end{table}
+```
 
 Posteriormente foi realizado o teste Kruskal-Wallis(P\<0,001), o qual apontou que existe ao menos uma diferença significativa entre os grupos de esportes quando comparados entre si.
 
 $$
 \begin{cases}
-        H_{0}: \parbox[t]{2\textwidth/3}{A distribuição das variáveis é a mesma para todos os grupos} \\
-        H_{1}: \parbox[t]{2\textwidth/3}{As distribuições das variáveis não são as mesmas para todos os grupos} \\
+        H_{0}: \parbox[t]{2\textwidth/3}{Não há diferença significativa entre os pares de grupos comparados} \\
+        H_{1}: \parbox[t]{2\textwidth/3}{Há diferença significativa entre os pares de grupos comparados} \\
 \end{cases}
 $$
+Quadro 4: P-valor para o teste post-hoc Dunn para comparação de IMC entre diferentes esportes
 
+```{=tex}
+\begin{table}[H]
+\begin{tabular}{|lcc|}
+\hline
+\textbf{Grupo} & \multicolumn{1}{l}{\textbf{P-valor}} & \multicolumn{1}{l|}{\textbf{Decisão do teste}} \\ \hline
+Esportes       & \multirow{2}{*}{0,519}               & \multirow{2}{*}{Rejeita $H_{0}$}                    \\
+IMC            &                                      &                                                \\ \hline
+\end{tabular}
+\end{table}
+```
 Ademais, vale ressaltar que, ao comparar os esportes a partir do teste de Dunn, o judô se destacou com grandes diferenças entre sua média de IMC em comparação com outros esportes, enquanto entre atletismo e badminton(p = 0,519) não foram encontradas diferenças significativas entre as médias.
 
-Quadro 1: Gráfico de colunas da categoria de IMC pelo esporte praticado
-
-```{r, echo=FALSE}
-
-
-
-```
 
 ```{r,echo=FALSE}
 print_quadro_resumo <- function(data, var_name, title="Medidas resumo
@@ -495,52 +456,41 @@ writeLines(latex)
 }
 ```
 
-```{r,echo=FALSE,include=FALSE}
-print_quadro_resumo(dadosespp,IMC)
-```
 
+Tabela 1: Esporte por categoria de IMC 
 ```{=tex}
-\begin{quadro}[H]
-    \caption{Medidas resumo
-da(o) [nome da variável]}
-    \centering
-    \begin{adjustbox}{max width=\textwidth}
-    \begin{tabular}{ | l |
-            S[table-format = 1.2]|}
-    \toprule
-        \textbf{Estatística} & \textbf{Valor}
-\\
-        \midrule
-        Média & 22.53 \\
-        Desvio Padrão & 3.65 \\
-        Variância & 13.3 \\
-        Mínimo & 15.16 \\
-        1o Quartil & 20.44 \\
-        Mediana & 22.04 \\
-        3o Quartil & 23.85 \\
-        Máximo & 56.5 \\
-    \bottomrule
-
-    \end{tabular}
-    \label{quad:quadro_resumo1}
-    \end{adjustbox}
-\end{quadro}
+\begin{table}[H]
+\begin{tabular}{l|c|c|c|c|c|}
+\cline{2-6}
+\textbf{}                                & \multicolumn{1}{l|}{\textbf{Atletismo}} & \textbf{Badminton} & \multicolumn{1}{l|}{\textbf{Futebol}} & \multicolumn{1}{l|}{\textbf{Ginástica}} & \multicolumn{1}{l|}{\textbf{Judô}} \\ \hline
+\multicolumn{1}{|l|}{\textbf{Abaixo}}    & 96                                      & 0                  & 6                                     & 77                                      & 0                                  \\ \hline
+\multicolumn{1}{|l|}{\textbf{Normal}}    & 690                                     & 116                & 468                                   & 257                                     & 161                                \\ \hline
+\multicolumn{1}{|l|}{\textbf{Obesidade}} & 52                                      & 0                  & 0                                     & 0                                       & 45                                 \\ \hline
+\multicolumn{1}{|l|}{\textbf{Sobrepeso}} & 95                                      & 3                  & 31                                    & 7                                       & 74                                 \\ \hline
+\end{tabular}
+\end{table}
 ```
-Percebe-se por meio da figura 3 a frequência de cada esporte dentro das categorias de IMC, as quais são classificadas como abaixo do ideal (IMC \< 18.5), normal (18.5 \< IMC \< 25), sobrepeso (25 \< IMC \< 30) e obesidade (IMC \> 30). Foi possível afirmar que o grupo de atletismo apresentam maior número de atletas com IMC abaixo do ideal (53,63%), enquanto os atletas do judo e badminton ficaram de fora dessa categoria.
+
+
+Percebe-se por meio da tabela  a frequência de cada esporte dentro das categorias de IMC, as quais são classificadas como abaixo do ideal (IMC \< 18.5), normal (18.5 \< IMC \< 25), sobrepeso (25 \< IMC \< 30) e obesidade (IMC \> 30). Foi possível afirmar que o grupo de atletismo apresentam maior número de atletas com IMC abaixo do ideal (53,63%), enquanto os atletas do judo e badminton ficaram de fora dessa categoria.
 
 ## Top 3 medalhistas gerais por quantidade de cada tipo de medalha
 
-Para a terceira análise, foi utilizado a variável medalha e análisado os três medalistas com maior numero de medalhas nessas últimas olimpiadas.
+Esta análise tem o objetivo de apontar os 3 maiores medalistas gerais, além de observar a quantidade de cada tipo de medalha que cada um destes atletas conquistou. Para isso, foram utilizadas as variáveis Nome, que se trata de uma variável qualitativa nominal, e Medalha, que se categoriza como uma variável qualitativa ordinal.Outrossim, será utilizado um gráfico de colunas e um quadro indicativo do p-valor do teste que será utilizado, a fim de ilustrar as análises.
 
-Figura 4: Gráfico de Colunas dos três medalistas mais pontuados e suas respectivas quantidades de medalhas.
+Figura 3: Gráfico de Colunas dos três medalistas mais pontuados e suas respectivas quantidades de medalhas.
 
 ```{r,echo=FALSE}
+top3isolado$Medal <- factor(top3isolado$Medal,levels = c("Gold","Silver","Bronze"))
+
 grafimeda <- top3isolado %>%
 mutate(Medal = case_when(
 Medal %>% str_detect("Bronze") ~ "Bronze",
 Medal %>% str_detect("Silver") ~ "Prata",
 Medal %>% str_detect("Gold") ~ "Ouro"
-)) %>%
+),
+Medal = factor(Medal, levels = c("Ouro", "Prata", "Bronze"))
+) %>%
 group_by(Name, Medal) %>%
 summarise(freq = n()) %>%
 mutate(
@@ -555,24 +505,31 @@ aes(
 x = fct_reorder(Name, freq, .desc = T), y = freq,
 fill = Medal, label = legendas
 ) +
+expand_limits(y = c(0,30)) +
 geom_col(position = position_dodge2(preserve = "single", padding =
 0)) +
 geom_text(
 position = position_dodge(width = .9),
 vjust = -0.5, hjust = 0.5,
 size = 3
-) +
+) + 
 labs(x = "Medalista", y = "Frequência") +
 theme_estat()
 ggsave("colunas-bi-freq-medal.pdf", width = 158, height = 93, units = "mm")
 ```
 
-Segundo a figura 4, foi observado uma diferença de 16 medalhas entre o primeiro colocado, o nadador Michael Phelps, e o segundo e terceiro colocados, os quais empataram em quantidade de medalhas. O valor de medalhas de ouro de Phelps chega a ser discrepante entre os outros competidores, o que indica uma maior vantagem do nadador sobre os outros atletas.
+Segundo a figura 3, foi observado uma diferença de 16 medalhas entre o primeiro colocado, o nadador Michael Phelps, e o segundo e terceiro colocados, os quais empataram em quantidade de medalhas. O valor de medalhas de ouro de Phelps chega a ser discrepante entre os outros competidores, o que indica uma maior vantagem do nadador sobre os outros atletas.
 
-Quadro 2: P-valor do teste de associação (Teste Qui-Quadrado) entre as variáveis medalista e medalha
+$$
+\begin{cases}
+        H_{0}: \parbox[t]{2\textwidth/3}{As variáveis medalhas e medalistas são independentes} \\
+        H_{1}: \parbox[t]{2\textwidth/3}{As variáveis medalhas e medalistas não são independentes} \\
+\end{cases}
+$$ 
+Quadro 5: P-valor do teste de independência (Teste Qui-Quadrado) entre as variáveis medalista e medalha
 
 ```{=tex}
-\begin{table}[]
+\begin{table}[H]
 \begin{tabular}{lllll}
 \cline{1-3}
 \multicolumn{1}{|l}{\textbf{Grupo}} & \textbf{P-valor}                           & \multicolumn{1}{l|}{\textbf{Decisão do teste}}   &  &  \\ \cline{1-3}
@@ -582,18 +539,37 @@ Quadro 2: P-valor do teste de associação (Teste Qui-Quadrado) entre as variáv
 \end{tabular}
 \end{table}
 ```
-$$
-\begin{cases}
-        H_{0}: \parbox[t]{2\textwidth/3}{As variáveis medalhas e medalistas são independentes} \\
-        H_{1}: \parbox[t]{2\textwidth/3}{As variáveis medalhas e medalistas não são independentes} \\
-\end{cases}
-$$ Analisando o Quadro 2, que representa o teste de associação entre as variáveis medalista e medalha, é visível que há uma associação estatisticamente significativa entre as variáveis analisadas (P = 0,012), ou seja, é possível afirmar que a frequência de medalha parece estar associada ao medalista.
+
+Analisando o Quadro 5, que representa o teste de associação entre as variáveis medalista e medalha, é visível que há uma associação estatisticamente significativa entre as variáveis analisadas (P = 0,012), ou seja, é possível afirmar que a frequência de medalha parece estar associada ao medalista.
 
 ## Variação peso por altura
 
-Esta análise tem o objetivo de compreender se há uma relação entre o peso e altura dos atletas. Para tal, foram utilizadas as variáveis Peso e Altura e será utilizado um quadro de medidas resumo e um quadro indicativo do p-valor do teste que será utilizado, a fim de ilustrar as análises.
+Esta análise tem o objetivo de compreender se há uma relação entre o peso e altura dos atletas. Para tal, foram utilizadas as variáveis Peso e Altura, as quais se tratam de variáveis quantitativas contínuas, e será utilizado um quadro de medidas resumo,um quadro indicativo do p-valor do teste que será utilizado e um gráfico de dispersão a fim de ilustrar as análises.
 
-Quadro 3: P-valor do teste de coorelação entre a Altura e o Peso
+Fugura 4: Gráfico de dispersão da relação entre Altura e Peso dos atletas
+```{r,echo=FALSE}
+ggplot(dadosf) +
+aes(x = Height, y = Weight) +
+geom_point(alpha = 0.15, colour = "#A11D21", size = 3) +
+labs(
+x = "Altura em centímtros",
+y = "Peso em libras"
+) +
+theme_estat()
+ggsave("disp_uni.pdf", width = 158, height = 93, units = "mm")
+```
+
+A figura 4 sugere que, à medida que a altura aumenta, o peso também tende a aumentar, indicando uma correlação positiva entre essas duas variáveis. Além disso, é possível afirmar que há uma certa dispersão dos pontos, ou seja, indivíduos de mesma altura podem ter pesos distintos.
+
+
+$$
+\begin{cases}
+        H_{0}: \parbox[t]{2\textwidth/3}{Não existe uma associação significativa entre o Peso e a Altura} \\
+        H_{1}: \parbox[t]{2\textwidth/3}{Existe uma associação significativa entre o Peso e a Altura} \\
+\end{cases}
+$$
+
+Quadro 6: P-valor do teste de coorelação entre a Altura e o Peso
 
 ```{=tex}
 \begin{table}[H]
@@ -609,13 +585,15 @@ Quadro 3: P-valor do teste de coorelação entre a Altura e o Peso
     \label{tab:resultados_teste}
 \end{table}
 ```
-Analisando o Quadro 3, que representa o teste de correlação entre as variáveis peso e altura, é visível que existe dependência entre as variáveis(P\<0,001), ou seja, há uma forte evidência que o peso e a altura do atleta estão associados de forma diretamente proporcional, quando um aumenta, o outro também tende a aumentar.
 
-$$
-\begin{cases}
-        H_{0}: \parbox[t]{2\textwidth/3}{Não existe uma associação significativa entre o Peso e a Altura} \\
-        H_{1}: \parbox[t]{2\textwidth/3}{Existe uma associação significativa entre o Peso e a Altura} \\
-\end{cases}
-$$
+Analisando o Quadro 6, que representa o teste de correlação entre as variáveis peso e altura, é visível que existe dependência entre as variáveis(P\<0,001), ou seja, há uma forte evidência que o peso e a altura do atleta estão associados de forma diretamente proporcional, quando um aumenta, o outro também tende a aumentar.
 
 ## Conclusões
+
+Em princípio, a análise acerca das mulheres medalistas mostrou que elas representam cerca de 44,48% do total de medalistas, com os Estados Unidos se destacando com o maior numero de ganhadoras, seguidos pela Rússia, China, Austrália e Alemanha. Essesn países dominam o ranking das medalhas femininas, sendo os Estados Unidos responsáveis por quase 14% das medalhas no Top 5.
+
+Já em relação às características físicas, observamos que os atletas dde ginástica apresentam IMC médio mais baixo, enquanto os judocas têm o IMC mais alto. A análise do IMC também revelou a diferença entre os esportes, com o judô destacando-se devido a um número elevado de outliers e uma diferença substancial de IMC, comparado aos outros esportes. Além disso, análise das frequências dos IMCs por esporte revelou que o atletismo possui a maior proporção de atletas com IMC abaixo do idea, enquanto judô e badminton não apresentaram atletas nessa categoria. Esses achados evidenciam a variabilidade nas características físicas dos atletas em diferentes esportes, o que pode influenciar diretamente no seu desempenho.
+
+Por fim, ao verificar o quadro de medalhas de atletas individuais, como o nadador e maior medalista Michael Phelps, mostrou uma discrepância significativa em seu número de medalhas de ouro, indicando uma vantagem sobre os demais medalistas, sugerindo que a frequência de medalhas está de fato relacionado ao perfil do medalista. Outrossim, quando se trata da relação entre o peso e a altura dos competidores premiados, há uma forte dependência entre as duas variáveis, com o aumento de um fator tendendo a se associar ao aumento do outro. 
+
+Em resumo, esses resultados conectam as características físicas dos atletas com seu desempenho nas Olimpíadas, proporcionando uma compreensão mais aperfeiçoada acerca de características como o valor do IMC, do peso e da altura, e suas devidas relações com o número de medalhas e os esportes praticados. Ou seja, o estudo revela padrões interessantes sobre como os aspectos físicos de cada competidor podem influenciar o desempenho pessoal nos jogos olímpicos.

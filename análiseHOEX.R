@@ -39,9 +39,10 @@ library(nortest)
 
 #separando pessoas medalistas
 dadosf <- dados %>% filter(!is.na(dados$Medal))
-
+dadosf
 #mulheres medalistas
 mulheresm <- filter(dadosf,Sex=="F")
+mulheresm <- distinct(mulheresm, Name, .keep_all = TRUE)
 
 #pegando as frequencias de cada pais
 freqpaises <- table(mulheresm$Team)
